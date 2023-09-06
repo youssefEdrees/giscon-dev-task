@@ -1,24 +1,50 @@
-import logo from './logo.svg';
+// src/App.js
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import './App.css';
+import { UserSelectionPage, MemberPage, MemberSelectionPage } from "./components/additional_pages"
+import AdminPage from './components/AdminPage';
+
+import 'react-toastify/dist/ReactToastify.css';
+import {ToastContainer,toast} from 'react-toastify'
+
+
+
+
+const types = {
+  notLoggedIn : 0,
+  admin : 1,
+  member : 2
+}
 
 function App() {
+  const [user,setUser] = useState({type:types.notLoggedIn, id:0});
+
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+  
+    <Router>
+      <ToastContainer autoClose={2500} hideProgressBar={true}/>
+      <div className='h-screen'>
+      <Routes>
+          
+        <Route path='/member/*' element={<MemberPage/>}/>  
+
+        <Route path="/" element={<Navigate to="/login"/>}/>
+
+        <Route path="/login" element={<UserSelectionPage/>}/>
+        
+        <Route path="/login/member" element={<MemberSelectionPage/>}/>
+        
+        <Route path="/admin" element={<AdminPage/>}/>
+        
+        
+        
+          
+      </Routes>
+      </div>
+    </Router>
   );
 }
 
